@@ -1,0 +1,49 @@
+/*
+To customize the look and feel of Ionic, you can override the variables
+in ionic's _variables.scss file.
+
+For example, you might change some of the default colors:
+
+$light:                           #fff !default;
+$stable:                          #f8f8f8 !default;
+$positive:                        #387ef5 !default;
+$calm:                            #11c1f3 !default;
+$balanced:                        #33cd5f !default;
+$energized:                       #ffc900 !default;
+$assertive:                       #ef473a !default;
+$royal:                           #886aea !default;
+$dark:                            #444 !default;
+*/
+
+
+// The path for our ionicons font files, relative to the built CSS in www/css
+$ionicons-font-path: "../lib/ionic/fonts" !default;
+
+// Include all of Ionic
+@import "www/lib/ionic/scss/ionic";
+
+$stable:                          #e8e8e8 !default;
+.tabs { padding-top: 0px; height: 55px}
+.tabs .icon { margin: 5px 0 0 0}
+.tab-item.tab-item-active, .tab-item.active, .tab-item.activated { color: #000; }
+.list {     margin-bottom: 0px; }
+.tab-dash { background-color: #e7d8cc; color: #fff; opacity: 1; }
+.tab-dash-content-pre { background: url(http://www.ellabellaphotos.com/blog/wp-content/uploads/2013/09/baker-1883web.jpg) no-repeat -85px -150px, -webkit-linear-gradient(top, #c1b3a7 0%, #e7d8cc 50%); background-size: 600px;}
+.tab-dash-content-pre .item.item-input { color: #fff; background-color:rgba(255, 255, 255, 0.7); border: 1px solid #dfd0c3; }
+.tab-dash-content-pre .card, .list-inset { background: none}
+.tab-dash-content-pre .card { background: none; box-shadow:none; margin-top: 180px; }
+.tab-dash-content-pre .card .item { background: rgba(255,255,255,0.7);}
+
+.tab-dash-content-post { background: -webkit-linear-gradient(top, #557196 0%, #e7d8cc 50%);}
+
+.tab-feed { background-color: #3A9AD9; color: #fff; opacity: 1; }
+.tab-feed-content { background: -webkit-linear-gradient(top, #557196 0%, #3A9AD9 50%); }
+.tab-change { background-color: #29ABA4; color: #fff; opacity: 1; }
+.tab-change-content { background: -webkit-linear-gradient(top, #557196 0%, #29ABA4 50%); }
+.tab-sleep { background-color: #354458; color: #fff; opacity: 1; }
+.tab-sleep-content { background: -webkit-linear-gradient(top, #557196 0%, #354458 50%); }
+.tab-growth { background-color: #EB7260; color: #fff; opacity: 1; }
+.tab-growth-content { background: -webkit-linear-gradient(top, #557196 0%, #EB7260 50%); }
+.tab-account { background-color: #8C6954; color: #fff; opacity: 1; }
+.tab-account-content { background: -webkit-linear-gradient(top, #557196 0%, #8C6954 50%); }
+

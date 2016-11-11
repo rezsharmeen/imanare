@@ -1,0 +1,67 @@
+<ion-view >
+  <ion-content class="tab-dash-content-pre" ng-show="isLoggedIn">
+    <div class="card">
+        <div class="item item-text-wrap">
+            Welcome to <b>Baby Tracker</b>. Your app to keep track the life and growth of your little angel.
+        </div>
+    </div>
+    <div class="list list-inset">
+      <label class="item item-input">
+        <span class="input-label">Username</span>
+        <input type="text">
+      </label>
+      <label class="item item-input">
+        <span class="input-label">Password</span>
+        <input type="password">
+      </label>
+      <label class="item item-input padding">
+        <button class="button button-block button-balanced">
+        Sign in
+      </button>
+      </label>
+    </div>
+    <div class="padding">
+      <button class="button button-block button-assertive">
+        Sign in with Google
+      </button>
+      <button class="button button-block button-positive">
+        Sign in with Facebook
+      </button>
+    </div>
+  </ion-content>
+</ion-view>
+
+<ion-tabs class="tabs-icon-top" ng-show="!isLoggedIn">
+
+  <!-- Dashboard Tab -->
+  <ion-tab title="Status" icon-off="ion-home" icon-on="ion-home" href="#/tab/dash" class="tab-item-custom tab-dash">
+    <ion-nav-view name="tab-dash"></ion-nav-view>
+  </ion-tab>
+
+  <!-- Chats Feed -->
+  <ion-tab title="Feed" icon-off="ion-waterdrop" icon-on="ion-waterdrop" href="#/tab/feed" class="tab-item-custom tab-feed">
+    <ion-nav-view name="tab-feed"></ion-nav-view>
+  </ion-tab>
+
+  <!-- Change Tab -->
+  <ion-tab title="Change" icon-off="ion-tshirt" icon-on="ion-tshirt" href="#/tab/change" class="tab-item-custom tab-change">
+    <ion-nav-view name="tab-change"></ion-nav-view>
+  </ion-tab>
+
+  <!-- Sleep Tab -->
+  <ion-tab title="Sleep" icon-off="ion-clock" icon-on="ion-clock" href="#/tab/sleep" class="tab-item-custom tab-sleep">
+    <ion-nav-view name="tab-sleep"></ion-nav-view>
+  </ion-tab>
+
+  <!-- Growth Tab -->
+  <ion-tab title="Growth" icon-off="ion-stats-bars" icon-on="ion-stats-bars" href="#/tab/growth" class="tab-item-custom tab-growth">
+    <ion-nav-view name="tab-growth"></ion-nav-view>
+  </ion-tab>
+
+  <!-- Account Tab -->
+  <ion-tab title="Account" icon-off="ion-ios-gear-outline" icon-on="ion-ios-gear" href="#/tab/account" class="tab-item-custom tab-account">
+    <ion-nav-view name="tab-account"></ion-nav-view>
+  </ion-tab>
+
+
+</ion-tabs>

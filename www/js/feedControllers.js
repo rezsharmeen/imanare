@@ -27,7 +27,6 @@ angular.module('starter.feedController', [])
                         }
 
                         function validateData(inputForm) {
-                            debugger;
                             $scope.inputFormSubmitted = true;
                             if (inputForm.$valid) {
                                 $scope.updateTime();
@@ -37,7 +36,7 @@ angular.module('starter.feedController', [])
 
                         // insert feed data in database
                         function addFeedData() {
-                            debugger;
+                            
                             var list = $firebaseArray(ref);
                             list.$add($scope.feed).then(function (ref) {
                                 var id = ref.key;

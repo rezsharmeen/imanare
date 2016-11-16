@@ -40,7 +40,10 @@
       </div>
 
       <div class="padding">
-        <button class="button button-block button-assertive">
+        <button class="button button-block button-assertive"
+                ng-cloak 
+                ng-show = "user.logged"
+                ng-click="logout()">
           Logout
         </button>
     </div>

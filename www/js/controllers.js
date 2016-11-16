@@ -1,8 +1,8 @@
 angular.module('starter.controllers', [])
 
-.controller('DashCtrl', function($scope) {})
+//.controller('DashCtrl', function($scope) {})
 
-.controller('FeedCtrl', function($scope) {})
+//.controller('FeedCtrl', function($scope) {})
 
 .controller('ChangeCtrl', function($scope) {})
 
@@ -10,4 +10,4 @@ angular.module('starter.controllers', [])
 
 .controller('GrowthCtrl', function($scope) {})
 
-.controller('AccountCtrl', function($scope) {});
+//.controller('AccountCtrl', function($scope) {});

@@ -1,52 +1,96 @@
 <ion-view >
-  <ion-content class="tab-feed-content">
-    <div class="button-bar">
-      <a href="#/tab/feed" class="button button-light button-clear">Add Feed Data</a>
-      <a href="#/tab/feed/history" class="button button-dark">Feeding History</a>
-    </div>
-    <div class="card">
-        <div class="list">
-            <label class="item item-input">What&nbsp;
-                <input type="text" placeholder="Milk" class="padding-left">
-            </label>
-            <label class="item item-input">Quantity&nbsp;
-                <input type="text" placeholder="5">
-                <input type="text" placeholder="Oz">
-            </label>
-            <label class="item item-input">When&nbsp;
-                <input type="datetime" placeholder="What">
-            </label>
-            <label class="item item-input">Note&nbsp;
-                <textarea placeholder="Comments" rows="2"></textarea>
-            </label>
-            <label class="item item-input">
-                <button class="button button-small button-stable ion-plus-round padding-left padding-right"> Log It</button>
-            </label>
+    <ion-content class="tab-feed-content">
+        <div class="button-bar">
+            <a href="#/tab/feed" class="button button-light button-clear">Add Feed Data</a>
+            <a href="#/tab/feed/history" class="button button-dark">Feeding History</a>
         </div>
-    </div>
 
-    <ul class="list padding">
-        <div class="item item-divider item-stable">Today Data</div>
-        <li class="item item-icon-left">
-            <i class="icon ion-chatbubble-working"></i>
-            Milk @ 3.15 pm
-            <span class="badge badge-assertive">5 oz</span> 
-            <p>Some note for me to remember.</p>
-        </li>
-        <li class="item item-icon-left">
-            <i class="icon ion-chatbubble-working"></i>
-            Milk @ 3.15 pm
-            <span class="badge badge-assertive">5 oz</span> 
-            <p>Some note for me to remember. Some note for me to remember. Some note for me to remember. Some note for me to remember.</p>
-        </li>
-        <li class="item item-icon-left">
-            <i class="icon ion-chatbubble-working"></i>
-            Milk @ 3.15 pm
-            <span class="badge badge-assertive">5 oz</span> 
-            <p>Some note for me to remember.</p>
-        </li>
-	    <li class="item">Aliquam tincidunt mauris eu risus.</li>
-	    <li class="item">Vestibulum auctor dapibus neque.</li>
-    </ul>
-  </ion-content>
+        <div class="card">
+            <form id="input-form" name="inputForm" ng-submit="validateData(inputForm)" novalidate>
+                <div class="list">
+                    <label class="item item-input">Type&nbsp;
+                        <select 
+                            class="padding-left"            
+                            name="feedType"
+                            ng-model="feed.type"
+                            ng-class="{error: (inputForm.feedType.$invalid && inputForm.feedType.$dirty)
+                                            || (inputForm.feedType.$invalid && inputFormSubmitted)}"
+                            required >
+                            <option value="liquid">Liquid</option>
+                            <option value="solid">Solid</option>
+                        </select>
+                    </label>
+                    <label class="item item-input">Quantity&nbsp;
+                        <select 
+                            name="feedAmount"
+                            ng-model="feed.amount"
+                            ng-class= "{error: (inputForm.feedAmount.$invalid && inputForm.feedAmount.$dirty)
+                                            || (inputForm.feedAmount.$invalid && inputFormSubmitted)}"
+                            required>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                        </select>
+                        <select 
+                            name="feedUnit"
+                            ng-model = "feed.unit"
+                            ng-class= "{error: (inputForm.feedUnit.$invalid && inputForm.feedUnit.$dirty)
+                                            || (inputForm.feedUnit.$invalid && inputFormSubmitted)}" 
+                            required >
+                            <option value="oz">Oz</option>
+                            <option value="tbs">Tablespoon</option>
+                            <option value="ts">Teaspoon</option>
+                        </select>
+                    </label>
+                    <label class="item item-input">When&nbsp;
+                        <input name="feedDatetime"
+                               ng-model=feed.datetime 
+                               value ="feed.datetime | date: 'yyyy-MM-ddTHH:mm'"
+                               type="datetime-local" placeholder="yyyy-MM-ddTHH:mm" required>
+                    </label>
+                    <label class="item item-input">Note&nbsp;
+                        <textarea 
+                            placeholder="Note" 
+                            row="2" 
+                            ng-model="feed.note">
+                        </textarea>
+                    </label>
+                    <label class="item item-input">
+                        <button class="button button-small button-stable ion-plus-round padding-left padding-right"> Log It</button>
+                    </label>
+                </div>
+            </form>
+        </div>
+
+        <ul class="list padding">
+            <div class="item item-divider item-stable">Today Data</div>
+            <li class="item item-icon-left">
+                <i class="icon ion-chatbubble-working"></i>
+                Milk @ 3.15 pm
+                <span class="badge badge-assertive">5 oz</span> 
+                <p>Some note for me to remember.</p>
+            </li>
+            <li class="item item-icon-left">
+                <i class="icon ion-chatbubble-working"></i>
+                Milk @ 3.15 pm
+                <span class="badge badge-assertive">5 oz</span> 
+                <p>Some note for me to remember. Some note for me to remember. Some note for me to remember. Some note for me to remember.</p>
+            </li>
+            <li class="item item-icon-left">
+                <i class="icon ion-chatbubble-working"></i>
+                Milk @ 3.15 pm
+                <span class="badge badge-assertive">5 oz</span> 
+                <p>Some note for me to remember.</p>
+            </li>
+            <li class="item">Aliquam tincidunt mauris eu risus.</li>
+            <li class="item">Vestibulum auctor dapibus neque.</li>
+        </ul>
+    </ion-content>
 </ion-view>

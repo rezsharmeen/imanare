@@ -10,4 +10,23 @@ angular.module('starter.controllers', [])
 
 .controller('GrowthCtrl', function($scope) {})
 
+.directive("ng-datetime", ["$filter", function($filter) {
+  var linkFn = function (scope, element, attr, ctrl) {
+    var listener = function() {
+      var value = element.val();
+      if (ctrl.$viewValue !== value) {
+        scope.$apply(function() {
+          ctrl.$setViewValue(value);
+        });
+      }
+    };
+    element.bind('change', listener);
+  };
+  return {
+    restrict: 'A',
+    require: 'ngModel',
+    link: linkFn
+  };
+}]);
+
 //.controller('AccountCtrl', function($scope) {});

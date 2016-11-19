@@ -9,6 +9,7 @@ angular.module('starter', [
     'ionic',
     'firebase',
     'ui.router',
+    'angular.filter',
     'starter.controllers',
     'starter.homeController',
     'starter.feedController',
@@ -40,10 +41,10 @@ angular.module('starter', [
                 messagingSenderId: "31374624217"
             };
             firebase.initializeApp(config);
-            
+
             $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
                 var user = firebase.auth().currentUser;
-
+                console.log(user);
                 if (user === null && toState.name !== 'home' ) {
                   event.preventDefault();
                   $state.transitionTo("home");

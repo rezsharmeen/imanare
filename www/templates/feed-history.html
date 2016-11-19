@@ -8,37 +8,28 @@
         <div class="list">
             <label class="item item-input">Pick a date&nbsp;
                 <input type="text" placeholder="All data" class="padding-left">
+                <input name="feedDate"
+                       ng-datetime
+                       ng-model="feedHistory.date" 
+                       value ="feedHistory.date | date: 'yyyy-MM-dd'"
+                       type="datetime-local" placeholder="yyyy-MM-dd" ng-change="showFeedHistory()" required>
             </label>
+            <br/>
         </div>
     </div>
 
-    <ul class="list padding">
-        <div class="item item-divider item-stable">Today</div>
-        <li class="item">Abcdefg Highlkm</li>
-        <li class="item">Abcdefg Highlkm</li>
-        <li class="item">Abcdefg Highlkm</li>
-        <li class="item">Abcdefg Highlkm</li>
+
+
+
+    <ul class="list padding" ng-repeat="(key, value) in feedingLog | groupBy: 'date'">
+       
+        <div class="item item-divider item-stable">{{key | date: 'MMM d, yyyy'}}</div>
+        <li class="item" ng-repeat="item in value" >
+            <i class="icon ion-chatbubble-working"></i>
+            {{item.type}} @ {{item.datetime | date: 'h:mma'}}
+            <span class="badge badge-assertive">{{item.amount}} {{item.unit}}</span> 
+            <p>{{item.note}}</p>
+        </li>
     </ul>
-    <ul class="list padding">
-        <div class="item item-divider item-stable">Yesterday</div>
-        <li class="item">Abcdefg Highlkm</li>
-        <li class="item">Abcdefg Highlkm</li>
-        <li class="item">Abcdefg Highlkm</li>
-        <li class="item">Abcdefg Highlkm</li>
-    </ul>
-    <ul class="list padding">
-        <div class="item item-divider item-stable">Jan 3rd,  2016</div>
-        <li class="item">Abcdefg Highlkm</li>
-        <li class="item">Abcdefg Highlkm</li>
-        <li class="item">Abcdefg Highlkm</li>
-        <li class="item">Abcdefg Highlkm</li>
-    </ul>
-    <ul class="list padding">
-        <div class="item item-divider item-stable">Jan 4th,  2016</div>
-        <li class="item">Abcdefg Highlkm</li>
-        <li class="item">Abcdefg Highlkm</li>
-        <li class="item">Abcdefg Highlkm</li>
-        <li class="item">Abcdefg Highlkm</li>
-    </ul>
-  </ion-content>
+   </ion-content>
 </ion-view>

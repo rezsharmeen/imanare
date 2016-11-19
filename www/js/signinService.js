@@ -16,7 +16,7 @@ angular.module('starter.signinService', ['starter.userService'])
                     return f + str.substr(1);
                 },
                 signinUser: function () {
-                    
+
                     var firebaseUser = authObj.$getAuth();
                     if (firebaseUser) {
                         var name = firebaseUser.displayName || this.firstPartOfEmail(firebaseUser.email);
@@ -29,6 +29,13 @@ angular.module('starter.signinService', ['starter.userService'])
                         return false;
                     }
                 },
+//                isAuth: function () {
+//                    if (authObj.$onAuth() != null) {
+//                        console.log('user logged in');
+//// User is authenticated
+//}
+//                 
+//                },
                 loginFacebook: function () {
                     var provider = new firebase.auth.FacebookAuthProvider();
                     firebase.auth().signInWithPopup(provider).then(function (result) {
@@ -47,7 +54,7 @@ angular.module('starter.signinService', ['starter.userService'])
                     });
                 },
                 loginGoogle: function () {
-                    
+
                     var provider = new firebase.auth.GoogleAuthProvider();
                     provider.addScope('https://www.googleapis.com/auth/plus.login');
                     firebase.auth().signInWithPopup(provider).then(function (result) {

@@ -68,27 +68,16 @@
                 </div>
             </form>
         </div>
-
+ 
         <ul class="list padding">
             <div class="item item-divider item-stable">Today Data</div>
-            <li class="item item-icon-left">
+            <li class="item item-icon-left" ng-repeat="item in feedingLogToday">
                 <i class="icon ion-chatbubble-working"></i>
-                Milk @ 3.15 pm
-                <span class="badge badge-assertive">5 oz</span> 
-                <p>Some note for me to remember.</p>
+                {{item.type}} @ {{item.datetime | date: 'h:mma'}}
+                <span class="badge badge-assertive">{{item.amount}} {{item.unit}}</span> 
+                <p>{{item.note}}</p>
             </li>
-            <li class="item item-icon-left">
-                <i class="icon ion-chatbubble-working"></i>
-                Milk @ 3.15 pm
-                <span class="badge badge-assertive">5 oz</span> 
-                <p>Some note for me to remember. Some note for me to remember. Some note for me to remember. Some note for me to remember.</p>
-            </li>
-            <li class="item item-icon-left">
-                <i class="icon ion-chatbubble-working"></i>
-                Milk @ 3.15 pm
-                <span class="badge badge-assertive">5 oz</span> 
-                <p>Some note for me to remember.</p>
-            </li>
+            
             <li class="item">Aliquam tincidunt mauris eu risus.</li>
             <li class="item">Vestibulum auctor dapibus neque.</li>
         </ul>

@@ -18,7 +18,11 @@ angular.module('starter', [
     'starter.services',
     'starter.signinService',
     'starter.userService'])
-
+        .factory("Auth", ["$firebaseAuth",
+            function($firebaseAuth) {
+                return $firebaseAuth();
+            }
+        ])
         .run(function ($ionicPlatform, firebase, $rootScope, $state) {
             $ionicPlatform.ready(function () {
                 // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -42,22 +46,33 @@ angular.module('starter', [
             };
             firebase.initializeApp(config);
 
-            $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
-                var user = firebase.auth().currentUser;
-                console.log(user);
-                if (user === null && toState.name !== 'home' ) {
-                  event.preventDefault();
-                  $state.transitionTo("home");
-                  return;
+//            $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
+//                var user = firebase.auth().currentUser;
+//                
+//                if (user === null && toState.name !== 'home' ) {
+//                  event.preventDefault();
+//                  $state.transitionTo("home");
+//                  return;
+//                }
+//                
+//                if (user !== null && toState.name === 'home' ) {
+//                  event.preventDefault();
+//                  $state.transitionTo("tab.dash");
+//                  return;
+//                }
+//                
+//                return;
+//            });
+            $rootScope.$on("$stateChangeError", function(event, toState, toParams, fromState, fromParams, error) {
+                // We can catch the error thrown when the $requireAuth promise is rejected
+                // and redirect the user back to the home page
+                if (error === "AUTH_REQUIRED" && toState.name !== 'home') {
+                    $state.transitionTo("home");
+                } else if(error !== "AUTH_REQUIRED" && toState.name === 'home' ) {
+                    event.preventDefault();
+                    $state.transitionTo("tab.dash");
+                    return;
                 }
-                
-                if (user !== null && toState.name === 'home' ) {
-                  event.preventDefault();
-                  $state.transitionTo("tab.dash");
-                  return;
-                }
-                
-                return;
             });
         })
         .config(function ($stateProvider, $urlRouterProvider) {
@@ -72,7 +87,8 @@ angular.module('starter', [
                         cache: false,
                         url: '/home',
                         templateUrl: 'templates/home.html',
-                        controller: 'HomeCtrl'
+                        controller: 'HomeCtrl',
+                        resolve: {'currentAuth': ['Auth', function(Auth) {return Auth.$getAuth();}]}
                     })
                     
                     // setup an abstract state for the tabs directive
@@ -81,6 +97,7 @@ angular.module('starter', [
                         url: '/tab',
                         abstract: true,
                         templateUrl: 'templates/tabs.html',
+                        resolve: {'currentAuth': ['Auth', function(Auth) {return Auth.$requireSignIn();}]}
                     })
 
                     // Each tab has its own nav history stack:
@@ -91,9 +108,10 @@ angular.module('starter', [
                         views: {
                             'tab-dash': {
                                 templateUrl: 'templates/tab-dash.html',
-                                controller: 'DashCtrl'
+                                controller: 'DashCtrl',
                             }
-                        }
+                        },
+                        resolve: {'currentAuth': ['Auth', function(Auth) {return Auth.$requireSignIn();}]}
                     })
 
                     .state('tab.feed', {
@@ -104,7 +122,8 @@ angular.module('starter', [
                                 templateUrl: 'templates/tab-feed.html',
                                 controller: 'FeedCtrl'
                             }
-                        }
+                        },
+                        resolve: {'currentAuth': ['Auth', function(Auth) {return Auth.$requireSignIn();}]}
                     })
                     .state('tab.feed-history', {
                         cache: false,
@@ -114,7 +133,8 @@ angular.module('starter', [
                                 templateUrl: 'templates/feed-history.html',
                                 controller: 'FeedCtrl'
                             }
-                        }
+                        },
+                        resolve: {'currentAuth': ['Auth', function(Auth) {return Auth.$requireSignIn();}]}
                     })
 
                     .state('tab.change', {
@@ -125,7 +145,8 @@ angular.module('starter', [
                                 templateUrl: 'templates/tab-change.html',
                                 controller: 'ChangeCtrl'
                             }
-                        }
+                        },
+                        resolve: {'currentAuth': ['Auth', function(Auth) {return Auth.$requireSignIn();}]}
                     })
                     .state('tab.change-history', {
                         cache: false,
@@ -135,7 +156,8 @@ angular.module('starter', [
                                 templateUrl: 'templates/change-history.html',
                                 controller: 'ChangeCtrl'
                             }
-                        }
+                        },
+                        resolve: {'currentAuth': ['Auth', function(Auth) {return Auth.$requireSignIn();}]}
                     })
 
                     .state('tab.sleep', {
@@ -146,7 +168,8 @@ angular.module('starter', [
                                 templateUrl: 'templates/tab-sleep.html',
                                 controller: 'SleepCtrl'
                             }
-                        }
+                        },
+                        resolve: {"currentAuth": ["Auth", function(Auth) {return Auth.$requireSignIn();}]}
                     })
                     .state('tab.sleep-history', {
                         cache: false,
@@ -156,7 +179,8 @@ angular.module('starter', [
                                 templateUrl: 'templates/sleep-history.html',
                                 controller: 'ChangeCtrl'
                             }
-                        }
+                        },
+                        resolve: {'currentAuth': ['Auth', function(Auth) {return Auth.$requireSignIn();}]}
                     })
 
                     .state('tab.growth', {
@@ -167,7 +191,8 @@ angular.module('starter', [
                                 templateUrl: 'templates/tab-growth.html',
                                 controller: 'GrowthCtrl'
                             }
-                        }
+                        },
+                        resolve: {'currentAuth': ['Auth', function(Auth) {return Auth.$requireSignIn();}]}
                     })
                     .state('tab.growth-history', {
                         cache: false,
@@ -177,7 +202,8 @@ angular.module('starter', [
                                 templateUrl: 'templates/growth-history.html',
                                 controller: 'GrowthCtrl'
                             }
-                        }
+                        },
+                        resolve: {'currentAuth': ['Auth', function(Auth) {return Auth.$requireSignIn();}]}
                     })
 
                     .state('tab.account', {
@@ -188,7 +214,8 @@ angular.module('starter', [
                                 templateUrl: 'templates/tab-account.html',
                                 controller: 'AccountCtrl'
                             }
-                        }
+                        },
+                        resolve: {'currentAuth': ['Auth', function(Auth) {return Auth.$requireSignIn();}]}
                     });
 
             // if none of the above states are matched, use this as the fallback

@@ -1,11 +1,11 @@
 angular.module('starter.accountController', [])
         .controller(
                 'AccountCtrl',
-                ['$scope', '$firebaseArray', '$firebaseAuth', 'signinService', 'userService', '$state',
-                    function ($scope, $firebaseArray, $firebaseAuth, signinService, userService, $state)
+                ['$scope', '$firebaseArray', '$firebaseAuth', 'signinService', 'userService', '$state', 'currentAuth',
+                    function ($scope, $firebaseArray, $firebaseAuth, signinService, userService, $state, currentAuth)
                     {
                         console.log('AccountCtrl');
-                        var uuid = userService.getUserID();
+                        var uuid = currentAuth.uid;
                         console.log(uuid);
                         var ref = firebase.database().ref('babyProfile').child(uuid);
                         
@@ -34,7 +34,7 @@ angular.module('starter.accountController', [])
                         $scope.logout = logout;
                         
                         console.log(signinService.signinUser());
-                        if (signinService.signinUser()) {
+                        if (currentAuth.uid || signinService.signinUser()) {
                             $scope.user.logged = true;
                         } else {
                             $scope.user.logged = false;

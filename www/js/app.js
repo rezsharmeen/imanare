@@ -66,14 +66,18 @@ angular.module('starter', [
             $rootScope.$on("$stateChangeError", function(event, toState, toParams, fromState, fromParams, error) {
                 // We can catch the error thrown when the $requireAuth promise is rejected
                 // and redirect the user back to the home page
-                if (error === "AUTH_REQUIRED" && toState.name !== 'home') {
-                    $state.transitionTo("home");
-                } else if(error !== "AUTH_REQUIRED" && toState.name === 'home' ) {
+                if (error === 'AUTH_REQUIRED' && toState.name !== 'home') {
+                    $state.transitionTo('home');
+                } else if(error !== 'AUTH_REQUIRED' && toState.name === 'home' ) {
                     event.preventDefault();
-                    $state.transitionTo("tab.dash");
+                    $state.transitionTo('tab.dash');
                     return;
                 }
             });
+             $rootScope.$on("$stateChange", function(event, toState, toParams, fromState, fromParams, error) {
+                var user = firebase.auth().currentUser;
+                console.log(user);
+            });           
         })
         .config(function ($stateProvider, $urlRouterProvider) {
 
@@ -123,7 +127,7 @@ angular.module('starter', [
                                 controller: 'FeedCtrl'
                             }
                         },
-                        resolve: {'currentAuth': ['Auth', function(Auth) {return Auth.$requireSignIn();}]}
+                        resolve: {'currentAuth': ['Auth', function(Auth) {console.log(Auth.$requireSignIn());return Auth.$requireSignIn();}]}
                     })
                     .state('tab.feed-history', {
                         cache: false,
@@ -169,7 +173,7 @@ angular.module('starter', [
                                 controller: 'SleepCtrl'
                             }
                         },
-                        resolve: {"currentAuth": ["Auth", function(Auth) {return Auth.$requireSignIn();}]}
+                        resolve: {"currentAuth": ['Auth', function(Auth) {return Auth.$requireSignIn();}]}
                     })
                     .state('tab.sleep-history', {
                         cache: false,

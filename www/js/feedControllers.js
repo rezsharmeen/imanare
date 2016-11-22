@@ -1,11 +1,12 @@
 angular.module('starter.feedController', [])
         .controller(
                 'FeedCtrl',
-                ['$scope', '$firebaseArray', '$state', 'signinService', 'userService',
-                    function ($scope, $firebaseArray, $state, signinService, userService)
+                ['$scope', '$firebaseArray', 'currentAuth',
+                    function ($scope, $firebaseArray, currentAuth)
                     {
-                        console.log('FeedCtrl');
-                        var uuid = userService.getUserID();
+                        console.log('FeedCtrl', currentAuth);
+                        // get uuid
+                        var uuid = currentAuth.uid;
                         var currentDatetime = new Date().getTime();
                         var prevDatetime = currentDatetime - 7 * 24 * 3600000;
                         var ref = firebase.database().ref('feedData').child(uuid)
@@ -13,7 +14,6 @@ angular.module('starter.feedController', [])
                                 .startAt(prevDatetime)
                                 .endAt(currentDatetime);
                         console.log(uuid);
-
                         console.log(ref);
                         var feedHistory = {
                             date: ''
@@ -69,7 +69,7 @@ angular.module('starter.feedController', [])
                                     amount: entry.amount
                                 };
                                 console.log(data);
-                                if (new Date().setHours(0, 0, 0, 0) == new Date(entry.datetimestamp).setHours(0, 0, 0, 0))
+                                if (new Date().setHours(0, 0, 0, 0) === new Date(entry.datetimestamp).setHours(0, 0, 0, 0))
                                     feedingLogToday.push(data);
                                 feedingLog.push(data);
 
@@ -79,14 +79,6 @@ angular.module('starter.feedController', [])
                             console.log('feedhistory date');
                             console.log($scope.feedHistory.date);
                         }
-                        // get user id 
-                        var userId = signinService.signinUser();
-
-                       
-                        // if user is not logged in route to login page
-                        if (userId === false)
-                            $state.go('tab.dash', {reload: true});
-
 
                         getCollection()
                                 .then(function (data) {

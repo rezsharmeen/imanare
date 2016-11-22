@@ -1,8 +1,8 @@
 angular.module('starter.dashController', [])
         .controller(
                 'DashCtrl',
-                ['$scope', '$firebaseArray', '$firebaseAuth', '$state', 'signinService', 'userService',
-                    function ($scope, $firebaseArray, $firebaseAuth, $state, signinService, userService)
+                ['$scope', '$firebaseArray', '$firebaseAuth', '$state', 'signinService', 'userService', 'currentAuth',
+                    function ($scope, $firebaseArray, $firebaseAuth, $state, signinService, userService, currentAuth)
                     {
                         var user = {
                             email: 'test4@gmail.com',
@@ -12,14 +12,9 @@ angular.module('starter.dashController', [])
                             logged: false
                         };
 
-//
-//                        function logout() {
-//                            $scope.authObj.$signOut();
-//                            $scope.user.logged = false;
-//                        }
 
                         function login() {
-                            debugger;
+                            
                             $scope.authObj.$signInWithEmailAndPassword($scope.user.email, $scope.user.pass).then(function (firebaseUser) {
                                 console.log(firebaseUser);
 
@@ -31,10 +26,10 @@ angular.module('starter.dashController', [])
                                 userService.setUserName(name);
                                 userService.setUserEmail(firebaseUser.email);
 
-                                console.log("Signed in as:", firebaseUser.uid);
+                                console.log('Signed in as:', firebaseUser.uid);
 
                             }).catch(function (error) {
-                                console.error("Authentication failed:", error);
+                                console.error('Authentication failed:', error);
                             });
                         }
 
@@ -96,7 +91,7 @@ angular.module('starter.dashController', [])
                         //$scope.logout = logout;
                         $scope.loginGoogle = signinService.loginGoogle;
                        
-                        if (signinService.signinUser()) {
+                        if (currentAuth.uid || signinService.signinUser()) {
                             $scope.user.logged = true;
                         } else {
                             $scope.user.logged = false;

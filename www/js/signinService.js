@@ -29,13 +29,7 @@ angular.module('starter.signinService', ['starter.userService'])
                         return false;
                     }
                 },
-//                isAuth: function () {
-//                    if (authObj.$onAuth() != null) {
-//                        console.log('user logged in');
-//// User is authenticated
-//}
-//                 
-//                },
+
                 loginFacebook: function () {
                     var provider = new firebase.auth.FacebookAuthProvider();
                     firebase.auth().signInWithPopup(provider).then(function (result) {

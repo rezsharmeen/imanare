@@ -14,16 +14,21 @@ angular.module('starter.dashController', [])
 
 
                         function login() {
-                            
+
                             $scope.authObj.$signInWithEmailAndPassword($scope.user.email, $scope.user.pass).then(function (firebaseUser) {
                                 console.log(firebaseUser);
 
                                 $scope.user.logged = true;
 
-                                var name = firebaseUser.displayName || firstPartOfEmail(firebaseUser.email);
 
+                                if (firebaseUser.displayName) {
+                                    var name = firebaseUser.displayName;
+                                    userService.setUserName(name, 'name');
+
+                                } else {
+                                    userService.setUserName(firebaseUser.email, 'email');
+                                }
                                 userService.setUserID(firebaseUser.uid);
-                                userService.setUserName(name);
                                 userService.setUserEmail(firebaseUser.email);
 
                                 console.log('Signed in as:', firebaseUser.uid);
@@ -38,15 +43,15 @@ angular.module('starter.dashController', [])
                             if (assertValidAccountProps()) {
                                 var email = $scope.user.email;
                                 var pass = $scope.user.pass;
-                                var name = firstPartOfEmail(email);
 
                                 // create user credentials in Firebase auth system
                                 $scope.authObj.$createUserWithEmailAndPassword(email, pass)
                                         .then(function (firebaseUser) {
-                                            $scope.user.name = name;
                                             userService.setUserID(firebaseUser.uid);
-                                            userService.setUserName(name);
                                             userService.setUserEmail(email);
+                                            userService.setUserName(name,'email');
+                                            $scope.user.name = userService.getUserName();
+                                           
                                         }).then(function () {
                                     // redirect to the home page
                                     $state.go('home');
@@ -71,16 +76,16 @@ angular.module('starter.dashController', [])
                         function errMessage(err) {
                             return angular.isObject(err) && err.code ? err.code : err + '';
                         }
-                        function firstPartOfEmail(email) {
-                            return ucfirst(email.substr(0, email.indexOf('@')) || '');
-                        }
-
-                        function ucfirst(str) {
-                            // inspired by: http://kevin.vanzonneveld.net
-                            str += '';
-                            var f = str.charAt(0).toUpperCase();
-                            return f + str.substr(1);
-                        }
+//                        function firstPartOfEmail(email) {
+//                            return ucfirst(email.substr(0, email.indexOf('@')) || '');
+//                        }
+//
+//                        function ucfirst(str) {
+//                            // inspired by: http://kevin.vanzonneveld.net
+//                            str += '';
+//                            var f = str.charAt(0).toUpperCase();
+//                            return f + str.substr(1);
+//                        }
 
 
                         //scopify
@@ -90,7 +95,7 @@ angular.module('starter.dashController', [])
                         $scope.login = login;
                         //$scope.logout = logout;
                         $scope.loginGoogle = signinService.loginGoogle;
-                       
+
                         if (currentAuth.uid || signinService.signinUser()) {
                             $scope.user.logged = true;
                         } else {

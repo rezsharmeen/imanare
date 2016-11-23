@@ -5,19 +5,37 @@ angular.module('starter.accountController', [])
                     function ($scope, $firebaseArray, $firebaseAuth, signinService, userService, $state, currentAuth)
                     {
                         console.log('AccountCtrl');
-                        var uuid = currentAuth.uid;
-                        console.log(uuid);
-                        var ref = firebase.database().ref('babyProfile').child(uuid);
-                        
+                        var uuid;
                         var user = {
-                            email: 'test4@gmail.com',
+                            email: '',
                             name: '',
-                            pass: '123456',
+                            pass: '',
                             confirm: '',
                             logged: false
                         };
+                        //mnp
+                        if (userService.getUserID()){
+                            uuid = userService.getUserID();
+                            user.name = userService.getUserName();
+                            user.email = userService.getUserEmail();
+                        }
+                        else {
+                            uuid = currentAuth.uid;
+                            userService.setUserID(currentAuth.uid);
+                            userService.setUserEmail(currentAuth.email);
+                            if (currentAuth.displayName) {
+                                userService.setUserName(currentAuth.displayName, 'name');
 
-
+                            } else {
+                                userService.setUserName(currentAuth.email, 'email');
+                            }
+                            user.name = userService.getUserName();
+                            user.email = userService.getUserEmail();
+                        }
+                        
+                        console.log(currentAuth);
+                        var ref = firebase.database().ref('babyProfile').child(uuid);
+                        
                         function logout() {
                             $scope.authObj.$signOut().then(function () {
                                 console.log('Signed Out');
@@ -31,6 +49,8 @@ angular.module('starter.accountController', [])
                         //scopify
                         $scope.authObj = $firebaseAuth();
                         $scope.user = user;
+                        
+                        
                         $scope.logout = logout;
                         
                         console.log(signinService.signinUser());

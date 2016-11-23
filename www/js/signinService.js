@@ -19,10 +19,16 @@ angular.module('starter.signinService', ['starter.userService'])
 
                     var firebaseUser = authObj.$getAuth();
                     if (firebaseUser) {
-                        var name = firebaseUser.displayName || this.firstPartOfEmail(firebaseUser.email);
+                        if(firebaseUser.displayName){
+                            var name = firebaseUser.displayName;
+                            userService.setUserName(name,'name');
+                            
+                        }
+                        else {
+                           userService.setUserName(firebaseUser.email,'email'); 
+                        }
                         console.log(firebaseUser);
                         userService.setUserID(firebaseUser.uid);
-                        userService.setUserName(name);
                         userService.setUserEmail(firebaseUser.email);
                         return firebaseUser.uid;
                     } else {

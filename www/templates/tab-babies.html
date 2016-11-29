@@ -1,0 +1,91 @@
+<ion-view >
+  <ion-content class="tab-account-content">
+    <div class="button-bar">
+        <a href="#/tab/babies" class="button button-light button-clear">Baby Info</a>
+        <a href="#/tab/account" class="button button-dark">Account Info</a>
+    </div>
+      
+    <ul class="list card" ng-show="babies && !(edit || create)">
+        <li class="item item-divider">
+            <label for="singleSelect" class="item item-input item-select">
+            <div class="input-label">
+              Current Baby Info
+            </div>
+            <select name="singleSelect" ng-model="currentBaby" ng-options="baby.name for baby in babies">
+            </select>
+          </label>
+        </li>
+        <li class="item item-icon-left">
+          <i class="icon ion-happy"></i>
+          <h2>Name</h2>
+          <p>{{currentBaby.name}}</p>
+        </li>
+
+        <li class="item item-icon-left">
+          <i class="icon ion-calendar"></i>
+          <h2>Date of Birth</h2>
+          <p>{{currentBaby.dob}}</p>
+        </li>
+
+        <li class="item item-icon-left item-text-wrap">
+          <i class="icon ion-calendar"></i>
+          <h2>Notes</h2>
+          <p>{{currentBaby.note}}</p>
+        </li>
+
+        <li class="item">
+            <button class="button button-block button-balanced" ng-click="tempBaby = currentBaby; edit = true;">Edit</button>
+        </li>
+    </ul>
+
+    <div class="list card" ng-show="!(edit || create)">
+        <div class="item item-button-right">
+          New baby: 
+          <button class="button button-balanced" ng-click="tempBaby = null; create = true;">
+            <i class="icon ion-plus-circled"> Add a baby</i>
+          </button>
+        </div>
+    </div>
+
+    <ul class="list card" ng-show="edit || create">
+        <form id="input-form" name="inputForm" ng-submit="validateData(inputForm)" novalidate>
+        <li class="item item-divider">
+            <h2 ng-show="edit">Update Baby Info</h2>
+            <h2 ng-show="create">Provide Baby Info</h2>
+        </li>
+        <li class="item item-icon-left">
+            <i class="icon ion-happy"></i>
+            <h2>Name</h2>
+            <input name="dob" placeholder="Enter name" 
+                   ng-model=tempBaby.name
+                type="text" required>
+        </li>
+
+        <li class="item item-icon-left">
+            <i class="icon ion-calendar"></i>
+            <h2>Date of Birth</h2>
+            <input name="dob" placeholder="Enter date of birth" 
+                ng-model=tempBaby.dob 
+                value ="feed.date | date: 'yyyy-MM-dd'"
+                type="date-local" placeholder="yyyy-MM-dd" required>
+        </li>
+
+        <li class="item item-icon-left item-text-wrap">
+            <i class="icon ion-calendar"></i>
+            <h2>Notes</h2>
+            <textarea 
+                placeholder="Note" 
+                row="3" cols="30" 
+                ng-model="tempBaby.note">
+            </textarea>
+        </li>
+
+        <li class="item">
+            <button class="button button-block button-assertive" ng-click="tempBaby = null; create = false; edit = false;">Cancel</button>
+            <button class="button button-block button-balanced" ng-show="edit">Update</button>
+            <button class="button button-block button-balanced" ng-show="create">Save</button>
+        </li>
+        </form>
+    </ul>
+  </ion-content>
+</ion-view>

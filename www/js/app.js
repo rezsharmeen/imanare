@@ -220,6 +220,17 @@ angular.module('starter', [
                             }
                         },
                         resolve: {'currentAuth': ['Auth', function(Auth) {return Auth.$requireSignIn();}]}
+                    })
+                    .state('tab.babies', {
+                        cache: false,
+                        url: '/babies',
+                        views: {
+                            'tab-account': {
+                                templateUrl: 'templates/tab-babies.html',
+                                controller: 'BabiesCtrl'
+                            }
+                        },
+                        resolve: {'currentAuth': ['Auth', function(Auth) {return Auth.$requireSignIn();}]}
                     });
 
             // if none of the above states are matched, use this as the fallback
